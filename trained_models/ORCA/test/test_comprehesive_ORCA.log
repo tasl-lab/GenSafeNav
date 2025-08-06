@@ -1,0 +1,13 @@
+2024-07-14 14:19:12, INFO: human number: 20
+2024-07-14 14:19:12, INFO: Randomize human's radius and preferred speed
+2024-07-14 14:19:12, INFO: Circle width: 8.485281374238571
+2024-07-14 14:19:12, INFO: robot FOV 6.283185
+2024-07-14 14:19:12, INFO: humans FOV 6.283185
+2024-07-14 14:32:14, INFO: Testing success rate: 0.7080, collision rate: 0.2520, timeout rate: 0.0400, nav time: 22.9294, path length: 19.9073, average intrusion ratio: 1.3982%, average minimal distance during intrusions: 0.4852
+2024-07-14 14:32:14, INFO: Collision cases: 3 5 9 10 25 28 40 43 49 51 53 54 61 64 72 81 85 86 90 95 99 104 107 109 110 115 117 120 121 123 125 128 129 135 140 144 146 147 151 157 161 163 166 169 172 183 184 185 186 189 194 195 198 199 206 207 212 219 220 221 223 230 242
+2024-07-14 14:32:14, INFO: Timeout cases: 50 103 112 119 148 181 201 225 231 248
+2024-07-14 14:32:14, INFO: human number: 20
+2024-07-14 14:32:14, INFO: Randomize human's radius and preferred speed
+2024-07-14 14:32:14, INFO: Circle width: 8.485281374238571
+2024-07-14 14:32:14, INFO: robot FOV 6.283185
+2024-07-14 14:32:14, INFO: humans FOV 6.283185
