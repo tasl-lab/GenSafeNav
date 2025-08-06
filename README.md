@@ -1,4 +1,4 @@
-# SoNIC-Social-Nav
+# GenSafeNav
 This is the codebase for the paper: _Towards Generalizable Safety in Crowd Navigation via Conformal Uncertainty Handling_.
 
 For more information, please also check:
