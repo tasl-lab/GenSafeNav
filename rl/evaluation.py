@@ -176,7 +176,7 @@ def evaluate(actor_critic, eval_envs, num_processes, device, test_size, logging,
     logging.info('Collision cases: ' + ' '.join([str(x) for x in collision_cases]))
     logging.info('Timeout cases: ' + ' '.join([str(x) for x in timeout_cases]))
     
-    file_path = os.path.join(model_dir, 'test', 'evaluation_data_best_model.csv')
+    file_path = os.path.join(model_dir, 'test', 'evaluation_data.csv')
     with open(file_path, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Success Times', 'Collision Times', 'Timeout Times', 'Path Length', 'Min Distance'])
