@@ -46,13 +46,13 @@ sudo systemctl restart docker
 4.) Go to your current project folder, and build the docker image:
 
 ```bash
-docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t sonic_py10:latest .
+docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t gen_safe_py10:latest .
 ```
 
 5.) Run the docker image by:
 
 ```bash
-docker run --runtime=nvidia -it -p 12345:8888 -v /home/docker_share:/home/ -v $(pwd):/workspace sonic_py10:latest /bin/bash
+docker run --runtime=nvidia -it -p 12345:8888 -v /home/docker_share:/home/ -v $(pwd):/workspace gen_safe_py10:latest /bin/bash
 ```
 
 6.) Test the pretrained models using `python test.py`
@@ -85,9 +85,9 @@ Note: if you face the problem of "Failed to initialize NVML: Unknown Error" insi
 
 In the episode with the same initialization, the four policies included in `trained_models` generate very different movements.
 
-1.) SoNIC:
+1.) Ours:
 
-<img src="visualizations/SoNIC_GST/0_success.gif" width="400" />
+<img src="visualizations/Ours_GST/0_success.gif" width="400" />
 
 
 2.) CrowdNav++:

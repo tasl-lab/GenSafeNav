@@ -38,7 +38,7 @@ class Config(object):
     
     env.val_size = 100
     env.test_size = 500
-    note = f"sonic_holo"
+    note = f"ours_holo"
     #################### unfrequently tuned ######################## 
     aggressiveness_factor = 0.0 # unused for now
     reward.intrusion_start_dist = 0.50 # unused
