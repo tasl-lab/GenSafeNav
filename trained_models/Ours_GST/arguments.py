@@ -10,31 +10,31 @@ def get_args():
     #################### frequently tuned parameters ######################## 
 
     parser.add_argument(
-        '--seed', type=int, default=42, help='random seed (default: 425)')
+        '--seed', type=int, default=42, help='random seed (default: 42)')
 
     parser.add_argument(
         '--num-processes',
         type=int,
-        default=128, #128,  # tag
-        help='how many training processes to use (default: 16)')
+        default=128, 
+        help='how many training processes to use (default: 128)')
 
     parser.add_argument(
         '--num-mini-batch',
         type=int,
-        default=32,#32,  # yjp mark: 2
+        default=32,
         help='number of batches for ppo (default: 32)')
 
     parser.add_argument(
         '--clip-param',
         type=float,
-        default=0.08, #0.16, # tag: 05/11/2024
-        help='ppo clip parameter (default: 0.2)')
+        default=0.08,
+        help='ppo clip parameter (default: 0.08)')
     
     parser.add_argument(
         '--num-env-steps',
         type=int,
         default=20e6,
-        help='number of environment steps to train (default: 10e6)')
+        help='number of environment steps to train (default: 20e6)')
     #################### unfrequently tuned ######################## 
     # yjp mark: aggressiveness
     parser.add_argument("-a", "--aggressiveness", type=float, required=False,

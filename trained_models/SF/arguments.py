@@ -50,7 +50,7 @@ def get_args():
         '--num-processes',
         type=int,
         default=16,
-        help='how many training processes to use (default: 16)')
+        help='how many training processes to use (default: 128)')
 
     parser.add_argument(
         '--num-mini-batch',
@@ -115,7 +115,7 @@ def get_args():
         '--num-env-steps',
         type=int,
         default=20e6,
-        help='number of environment steps to train (default: 10e6)')
+        help='number of environment steps to train (default: 20e6)')
     # True for unicycle, False for holonomic
     parser.add_argument(
         '--use-linear-lr-decay',

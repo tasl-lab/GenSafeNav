@@ -361,8 +361,6 @@ class selfAttn_merge_SRNN(nn.Module):
         spatial_edges = reshapeT(inputs['spatial_edges'], seq_length, nenv)
         conformity_scores = reshapeT(inputs['conformity_scores'], seq_length, nenv) # sorted
 
-        # aggressiveness_factor = reshapeT(inputs['aggressiveness_factor'], seq_length, nenv)
-
 
         # to prevent errors in old models that does not have sort_humans argument
         if not hasattr(self.args, 'sort_humans'):

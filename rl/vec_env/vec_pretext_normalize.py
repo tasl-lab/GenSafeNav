@@ -160,7 +160,7 @@ class VecPretextNormalize(VecEnvWrapper):
             (1, 1, self.config.sim.predict_steps))  # 4, 8, 16, 32, 64
 
         # [n_env, 1, 1]
-        collision_penalties = self.config.reward.base_collision_penalty # + 5 * O['aggressiveness_factor']
+        collision_penalties = self.config.reward.base_collision_penalty
 
         # [1, 1, predict_steps]
         collision_penalties_future = collision_penalties / coefficients
