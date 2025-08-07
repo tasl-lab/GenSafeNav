@@ -14,7 +14,7 @@ from rl.networks.model import Policy
 from crowd_sim import *
 
 MODEL_NAME = "Ours_GST"
-MODEL_INDEX = "41665" if MODEL_NAME == "GST_predictor_rand" else "05207"
+MODEL_INDEX = "05207"
 
 
 def main():
