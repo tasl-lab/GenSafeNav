@@ -1,32 +1,65 @@
 import argparse
+from datetime import datetime
 
 import torch
 
 
+# yjp mark: this file is to set up parameters for training
 def get_args():
     parser = argparse.ArgumentParser(description='RL')
+    #################### frequently tuned parameters ######################## 
 
-    # the saving directory for train.py
     parser.add_argument(
-        '--output_dir', type=str, default='trained_models/GST_predictor_rand')
+        '--seed', type=int, default=42, help='random seed (default: 42)')
+
+    parser.add_argument(
+        '--num-processes',
+        type=int,
+        default=128, 
+        help='how many training processes to use (default: 128)')
+
+    parser.add_argument(
+        '--num-mini-batch',
+        type=int,
+        default=32,
+        help='number of batches for ppo (default: 32)')
+
+    parser.add_argument(
+        '--clip-param',
+        type=float,
+        default=0.08,
+        help='ppo clip parameter (default: 0.08)')
+    
+    parser.add_argument(
+        '--num-env-steps',
+        type=int,
+        default=20e6,
+        help='number of environment steps to train (default: 20e6)')
+    #################### unfrequently tuned ######################## 
+    # yjp mark: aggressiveness
+    parser.add_argument("-a", "--aggressiveness", type=float, required=False,
+                        default=0.0, help="set aggressiveness factor")
+    
 
     # resume training from an existing checkpoint or not
     parser.add_argument(
         '--resume', default=False, action='store_true')
     # if resume = True, load from the following checkpoint
     parser.add_argument(
-        '--load-path', default='trained_models/GST_predictor_non_rand/checkpoints/41200.pt',
+        '--load-path', default='trained_models/GST_predictor_non_rand' +
+                               '/checkpoints/41200.pt',
         help='path of weights for resume training')
     parser.add_argument(
         '--overwrite',
         default=True,
         action='store_true',
-        help = "whether to overwrite the output directory in training")
+        help="whether to overwrite the output directory in training")
     parser.add_argument(
         '--num_threads',
         type=int,
         default=1,
         help="number of threads used for intraop parallelism on CPU")
+
     # only implement in testing
     parser.add_argument(
         '--phase', type=str, default='test')
@@ -37,26 +70,14 @@ def get_args():
         default=False,
         help="sets flags for determinism when using CUDA (potentially slow!)")
 
-    # only works for gpu only (although you can make it work on cpu after some minor fixes)
+    # only works for gpu only
+    # (although you can make it work on cpu after some minor fixes)
     parser.add_argument(
         '--no-cuda',
         action='store_true',
         default=False,
         help='disables CUDA training')
-    parser.add_argument(
-        '--seed', type=int, default=425, help='random seed (default: 1)')
 
-    parser.add_argument(
-        '--num-processes',
-        type=int,
-        default=16,
-        help='how many training processes to use (default: 128)')
-
-    parser.add_argument(
-        '--num-mini-batch',
-        type=int,
-        default=2,
-        help='number of batches for ppo (default: 32)')
     parser.add_argument(
         '--num-steps',
         type=int,
@@ -74,14 +95,9 @@ def get_args():
         default=5,
         help='number of ppo epochs (default: 4)')
     parser.add_argument(
-        '--clip-param',
-        type=float,
-        default=0.2,
-        help='ppo clip parameter (default: 0.2)')
-    parser.add_argument(
         '--value-loss-coef',
         type=float,
-        default=0.5,
+        default=0.5, # tag: 0.5 #yjpchange
         help='value loss coefficient (default: 0.5)')
     parser.add_argument(
         '--entropy-coef',
@@ -89,7 +105,7 @@ def get_args():
         default=0.0,
         help='entropy term coefficient (default: 0.01)')
     parser.add_argument(
-        '--lr', type=float, default=4e-5, help='learning rate (default: 7e-4)')
+        '--lr', type=float, default=3e-5, help='learning rate (default: 7e-4)') # tag: 4e-5 #yjpchange
     parser.add_argument(
         '--eps',
         type=float,
@@ -108,14 +124,9 @@ def get_args():
     parser.add_argument(
         '--max-grad-norm',
         type=float,
-        default=0.5,
+        default=0.5, #tag  #yjpchange 0.5
         help='max norm of gradients (default: 0.5)')
     # 10e6 for holonomic, 20e6 for unicycle
-    parser.add_argument(
-        '--num-env-steps',
-        type=int,
-        default=20e6,
-        help='number of environment steps to train (default: 20e6)')
     # True for unicycle, False for holonomic
     parser.add_argument(
         '--use-linear-lr-decay',
@@ -162,7 +173,6 @@ def get_args():
         default=False,
         help='auxiliary loss on human nodes outputs')
 
-
     # Input and output size
     parser.add_argument('--human_node_input_size', type=int, default=3,
                         help='Dimension of the node features')
@@ -174,8 +184,8 @@ def get_args():
     # Embedding size
     parser.add_argument('--human_node_embedding_size', type=int, default=64,
                         help='Embedding size of node features')
-    parser.add_argument('--human_human_edge_embedding_size', type=int, default=64,
-                        help='Embedding size of edge features')
+    parser.add_argument('--human_human_edge_embedding_size', type=int,
+                        default=64, help='Embedding size of edge features')
 
     # Attention vector dimension
     parser.add_argument('--attention_size', type=int, default=64,
@@ -189,11 +199,13 @@ def get_args():
     parser.add_argument('--use_self_attn', type=bool, default=True,
                         help='Attention size')
 
-    # use attn between humans and robots or not (todo: implment this in network models)
+    # use attn between humans and robots or not
+    # (todo: implment this in network models)
     parser.add_argument('--use_hr_attn', type=bool, default=True,
                         help='Attention size')
 
-    # No prediction: for orca, sf, old_srnn, selfAttn_srnn_noPred ablation: 'CrowdSimVarNum-v0',
+    # No prediction: for orca, sf, old_srnn, selfAttn_srnn_noPred
+    # ablation: 'CrowdSimVarNum-v0',
     # for constant velocity Pred, ground truth Pred: 'CrowdSimPred-v0'
     # gst pred: 'CrowdSimPredRealGST-v0'
     parser.add_argument(
@@ -201,10 +213,8 @@ def get_args():
         default='CrowdSimPredRealGST-v0',
         help='name of the environment')
 
-
     # sort all humans and squeeze them to the front or not
     parser.add_argument('--sort_humans', type=bool, default=True)
-
 
     args = parser.parse_args()
 

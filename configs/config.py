@@ -1,5 +1,5 @@
 import numpy as np
-from ..arguments import get_args
+
 
 class BaseConfig(object):
     def __init__(self):
@@ -7,10 +7,7 @@ class BaseConfig(object):
 
 
 class Config(object):
-    # for now, import all args from arguments.py
-    args = get_args()
-
-    training = BaseConfig()
+    # general configs for OpenAI gym env
     env = BaseConfig()
     reward = BaseConfig()
     aci_related = BaseConfig()
@@ -18,51 +15,59 @@ class Config(object):
     network_related = BaseConfig()
     dataset = BaseConfig()
     policy = BaseConfig()
-    aggressiveness_factor = 0.0 # unused
-    cv_prediction_steps = 5 # unused
-    training.device = "cuda:0" if args.cuda else "cpu"
-
+    #################### frequently tuned parameters ######################## 
     aci_related.considered_steps = 2
     aci_related.prediction_extra_buffer_size = 0.0
     aci_related.current_position_buffer = 0.25
     aci_related.alpha = 0.1
 
-    aci_related.noise_clip_for_conformity_scores = 0#0.1
-    aci_related.noise_std_for_conformity_scores = 0#0.1
+    aci_related.noise_clip_for_conformity_scores = 0
+    aci_related.noise_std_for_conformity_scores = 0
     
     aci_related.noise_std_for_cost = 0.0
     aci_related.noise_clip_for_cost = 0.00
-    aci_related.only_circular = False #tag
-    aci_related.only_prediction_line = True
-    constrained_rl_related.cost_limit = 0.25
-    constrained_rl_related.lag_init = 0.10#0.125
-    constrained_rl_related.lag_lr = 16e-4#18e-4
-
-    policy.aci_input = False
-    policy.constant_std = False
-    policy.constrain_cost = False
-
-    # general configs for OpenAI gym env
-    env = BaseConfig()
-    env.time_limit = 50
-    env.time_step = 0.25
+    aci_related.only_circular = False
+    aci_related.only_prediction_line = False
+    constrained_rl_related.cost_limit = 0.4
+    constrained_rl_related.lag_init = 0.10
+    constrained_rl_related.lag_lr = 16e-4
+    
+    policy.aci_input = True
+    policy.constant_std = True
+    
+    policy.constrain_cost = True
+    
     env.val_size = 100
     env.test_size = 500
-    # if randomize human behaviors, set to True, else set to False
+    note = f"gen_safe_nav"
+    #################### unfrequently tuned ######################## 
+    aggressiveness_factor = 0.0 # unused
+    reward.intrusion_start_dist = 0.50 # unused
+
+
     env.randomize_attributes = True
-    env.num_processes = args.num_processes
-    # record robot states and actions an episode for system identification in sim2real
+    env.time_limit = 50
+    env.time_step = 0.25    
+    # record robot states and actions an episode
+    #       for system identification in sim2real
     env.record = False
     env.load_act = False
 
     # config for reward function
-    reward = BaseConfig()
+    
     reward.success_reward = 10
-    reward.collision_penalty = -20
+    reward.base_collision_penalty = -20
     # discomfort distance
     reward.discomfort_dist = 0.25
+    # today
     reward.discomfort_penalty_factor = 10
-    reward.gamma = 0.99
+    reward.gamma = 0.99    
+    
+    # for now, import all args from arguments.py
+    cv_prediction_steps = 5 # unused to be removed
+
+    training = BaseConfig()
+    training.device = "cuda:0"
 
     # config for simulation
     sim = BaseConfig()
@@ -71,7 +76,7 @@ class Config(object):
     sim.human_num = 20
     # actual human num in each timestep, in [human_num-human_num_range, human_num+human_num_range]
     sim.human_num_range = 0
-    sim.predict_steps = 5
+    sim.predict_steps = 5  # yjp mark: prediction horizon (steps)
     # 'const_vel': constant velocity model,
     # 'truth': ground truth future traj (with info in robot's fov)
     # 'inferred': inferred future traj from GST network
@@ -125,8 +130,7 @@ class Config(object):
     # robot config
     robot = BaseConfig()
     # whether robot is visible to humans (whether humans respond to the robot's motion)
-    robot.visible = False
-    # For baseline: srnn; our method: selfAttn_merge_srnn
+    robot.visible = False 
     robot.policy = 'selfAttn_merge_srnn'
     robot.radius = 0.3
     robot.v_pref = 1

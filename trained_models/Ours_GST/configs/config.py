@@ -12,7 +12,7 @@ class Config(object):
     reward = BaseConfig()
     aci_related = BaseConfig()
     constrained_rl_related = BaseConfig()
-    network_related = BaseConfig() #TODO: whether or not to incorporate aci scores/addbias/etc
+    network_related = BaseConfig()
     dataset = BaseConfig()
     policy = BaseConfig()
     #################### frequently tuned parameters ######################## 
@@ -21,16 +21,16 @@ class Config(object):
     aci_related.current_position_buffer = 0.25
     aci_related.alpha = 0.1
 
-    aci_related.noise_clip_for_conformity_scores = 0#0.1
-    aci_related.noise_std_for_conformity_scores = 0#0.1
+    aci_related.noise_clip_for_conformity_scores = 0
+    aci_related.noise_std_for_conformity_scores = 0
     
     aci_related.noise_std_for_cost = 0.0
     aci_related.noise_clip_for_cost = 0.00
-    aci_related.only_circular = False #tag
+    aci_related.only_circular = False
     aci_related.only_prediction_line = False
     constrained_rl_related.cost_limit = 0.4
-    constrained_rl_related.lag_init = 0.10#0.125
-    constrained_rl_related.lag_lr = 16e-4#18e-4
+    constrained_rl_related.lag_init = 0.10
+    constrained_rl_related.lag_lr = 16e-4
     
     policy.aci_input = True
     policy.constant_std = True
@@ -39,14 +39,14 @@ class Config(object):
     
     env.val_size = 100
     env.test_size = 500
-    note = f"last_cp_0_08_cl_{constrained_rl_related.cost_limit}_lag_{constrained_rl_related.lag_lr}_lag_init_{constrained_rl_related.lag_init}"
+    note = f"gen_safe_nav"
     #################### unfrequently tuned ######################## 
-    aggressiveness_factor = 0.0 # unused for now
+    aggressiveness_factor = 0.0 # unused
     reward.intrusion_start_dist = 0.50 # unused
 
 
     env.randomize_attributes = True
-    env.time_limit = 50  # yjp mark: original: 50
+    env.time_limit = 50
     env.time_step = 0.25    
     # record robot states and actions an episode
     #       for system identification in sim2real
@@ -130,8 +130,7 @@ class Config(object):
     # robot config
     robot = BaseConfig()
     # whether robot is visible to humans (whether humans respond to the robot's motion)
-    robot.visible = False # tag: 05/02/2024
-    # For baseline: srnn; our method: selfAttn_merge_srnn
+    robot.visible = False 
     robot.policy = 'selfAttn_merge_srnn'
     robot.radius = 0.3
     robot.v_pref = 1

@@ -50,13 +50,13 @@ def get_args():
         '--num-processes',
         type=int,
         default=16,
-        help='how many training processes to use (default: 128)')
+        help='how many training processes to use (default: 16)')
 
     parser.add_argument(
         '--num-mini-batch',
         type=int,
         default=2,
-        help='number of batches for ppo (default: 32)')
+        help='number of batches for ppo (default: 2)')
     parser.add_argument(
         '--num-steps',
         type=int,
