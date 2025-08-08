@@ -1,5 +1,5 @@
 # GenSafeNav
-This is the codebase for the paper: _Towards Generalizable Safety in Crowd Navigation via Conformal Uncertainty Handling_.
+This is the codebase for the paper: _[Towards Generalizable Safety in Crowd Navigation via Conformal Uncertainty Handling](https://arxiv.org/abs/2508.05634v1)_.
 
 For more information, please also check:
 
