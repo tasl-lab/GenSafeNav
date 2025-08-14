@@ -116,7 +116,7 @@ If you find our work useful, please consider citing our paper:
 @inproceedings{yao2025towards,
     title={Towards Generalizable Safety in Crowd Navigation via Conformal Uncertainty Handling},
     author={Yao, Jianpeng and Zhang, Xiaopan and Xia, Yu and Roy-Chowdhury, Amit K and Li, Jiachen},
-    journal={Conference on Robot Learning (CoRL)},
+    booktitle={Conference on Robot Learning (CoRL)},
     year={2025}
 }
 ```
