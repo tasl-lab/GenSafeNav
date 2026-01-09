@@ -15,11 +15,11 @@ Mobile robots navigating in crowds trained using reinforcement learning are know
 
 ## Timeline
 
+01/2026: ROS2 implementation code release.
+
 08/2025: Training script release.
 
 02/2025: Test & visualization code release.
-
-The code for the ROS2 system demonstrated in our experiments will be made publicly available after proper preparation. Thanks for your attention.
 
 ## Quick Start
 
